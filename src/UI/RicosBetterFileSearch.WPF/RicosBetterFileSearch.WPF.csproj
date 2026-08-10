@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SharedKernel\RicosBetterFileSearch.SharedKernel\RicosBetterFileSearch.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\RicosBetterFileSearch.Infrastructure\RicosBetterFileSearch.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Folders\RicosBetterFileSearch.Modules.Folders\RicosBetterFileSearch.Modules.Folders.csproj" />
+    <ProjectReference Include="..\..\Modules\Indexing\RicosBetterFileSearch.Modules.Indexing\RicosBetterFileSearch.Modules.Indexing.csproj" />
+    <ProjectReference Include="..\..\Modules\Tags\RicosBetterFileSearch.Modules.Tags\RicosBetterFileSearch.Modules.Tags.csproj" />
+    <ProjectReference Include="..\..\Modules\Search\RicosBetterFileSearch.Modules.Search\RicosBetterFileSearch.Modules.Search.csproj" />
+    <ProjectReference Include="..\..\Modules\Statistics\RicosBetterFileSearch.Modules.Statistics\RicosBetterFileSearch.Modules.Statistics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+</Project>
