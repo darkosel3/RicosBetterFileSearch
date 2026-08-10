@@ -1,0 +1,31 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="src/Infrastructure/RicosBetterFileSearch.Infrastructure/RicosBetterFileSearch.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Folders/">
+    <Project Path="src/Modules/Folders/RicosBetterFileSearch.Modules.Folders/RicosBetterFileSearch.Modules.Folders.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Indexing/">
+    <Project Path="src/Modules/Indexing/RicosBetterFileSearch.Modules.Indexing/RicosBetterFileSearch.Modules.Indexing.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Search/">
+    <Project Path="src/Modules/Search/RicosBetterFileSearch.Modules.Search/RicosBetterFileSearch.Modules.Search.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Statistics/">
+    <Project Path="src/Modules/Statistics/RicosBetterFileSearch.Modules.Statistics/RicosBetterFileSearch.Modules.Statistics.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Tags/">
+    <Project Path="src/Modules/Tags/RicosBetterFileSearch.Modules.Tags/RicosBetterFileSearch.Modules.Tags.csproj" />
+  </Folder>
+  <Folder Name="/src/SharedKernel/">
+    <Project Path="src/SharedKernel/RicosBetterFileSearch.SharedKernel/RicosBetterFileSearch.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/src/UI/">
+    <Project Path="src/UI/RicosBetterFileSearch.WPF/RicosBetterFileSearch.WPF.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/RicosBetterFileSearch.Tests/RicosBetterFileSearch.Tests.csproj" />
+  </Folder>
+</Solution>
