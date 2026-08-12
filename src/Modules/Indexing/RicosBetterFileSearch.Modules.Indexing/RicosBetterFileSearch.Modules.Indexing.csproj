@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedKernel\RicosBetterFileSearch.SharedKernel\RicosBetterFileSearch.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\Folders\RicosBetterFileSearch.Modules.Folders\RicosBetterFileSearch.Modules.Folders.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
