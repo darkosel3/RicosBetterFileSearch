@@ -1,0 +1,53 @@
+<UserControl x:Class="RicosBetterFileSearch.WPF.Views.SearchView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:RicosBetterFileSearch.WPF.ViewModels">
+    <UserControl.DataContext>
+        <x:Static Member="vm:ViewModelLocator.Search" />
+    </UserControl.DataContext>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+
+        <!-- Search bar -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBox Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                     Width="350" Margin="0,0,8,0" VerticalContentAlignment="Center"/>
+            <TextBox Text="{Binding ExtensionFilter, UpdateSourceTrigger=PropertyChanged}"
+                     Width="100" Margin="0,0,8,0" VerticalContentAlignment="Center"/>
+            <Button Content="Pretrazi" Command="{Binding SearchCommand}" Padding="12,4"/>
+        </StackPanel>
+
+        <!-- Results -->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding SearchResults}"
+                  AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Naziv fajla" Binding="{Binding FileName}" Width="200"/>
+                <DataGridTextColumn Header="Putanja" Binding="{Binding FilePath}" Width="300"/>
+                <DataGridTextColumn Header="Ext" Binding="{Binding Extension}" Width="60"/>
+                <DataGridTextColumn Header="Velicina" Binding="{Binding SizeInBytes, StringFormat='{}{0:N0} B'}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- History header -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,4">
+            <TextBlock Text="Istorija pretrage" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <Button Content="Obrisi istoriju" Command="{Binding ClearHistoryCommand}" Padding="8,2"/>
+        </StackPanel>
+
+        <!-- History list -->
+        <DataGrid Grid.Row="3" ItemsSource="{Binding History}"
+                  AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Upit" Binding="{Binding Query}" Width="200"/>
+                <DataGridTextColumn Header="Filter" Binding="{Binding ExtensionFilter}" Width="80"/>
+                <DataGridTextColumn Header="Rezultata" Binding="{Binding ResultCount}" Width="70"/>
+                <DataGridTextColumn Header="Vreme" Binding="{Binding CreatedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,48 @@
+<UserControl x:Class="RicosBetterFileSearch.WPF.Views.FoldersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:RicosBetterFileSearch.WPF.ViewModels">
+    <UserControl.DataContext>
+        <x:Static Member="vm:ViewModelLocator.Folders" />
+    </UserControl.DataContext>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Add folder -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBox Text="{Binding NewFolderPath, UpdateSourceTrigger=PropertyChanged}"
+                     Width="450" Margin="0,0,8,0" VerticalContentAlignment="Center"/>
+            <Button Content="Browse..." Command="{Binding BrowseFolderCommand}" Margin="0,0,8,0" Padding="12,4"/>
+            <Button Content="Dodaj Folder" Command="{Binding AddFolderCommand}" Padding="12,4"/>
+        </StackPanel>
+
+        <!-- Folder list -->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Folders}"
+                  SelectedItem="{Binding SelectedFolder}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single" Margin="0,0,0,8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Naziv" Binding="{Binding FolderName}" Width="150"/>
+                <DataGridTextColumn Header="Putanja" Binding="{Binding FolderPath}" Width="300"/>
+                <DataGridCheckBoxColumn Header="Aktivan" Binding="{Binding IsActive}" Width="60"/>
+                <DataGridTextColumn Header="Fajlova" Binding="{Binding FileCount}" Width="60"/>
+                <DataGridTextColumn Header="Poslednje skeniranje" Binding="{Binding LastScannedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Actions -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,8">
+            <Button Content="Skeniraj izabrani" Command="{Binding ScanFolderCommand}" Padding="12,4" Margin="0,0,8,0"/>
+            <Button Content="Skeniraj sve" Command="{Binding ScanAllFoldersCommand}" Padding="12,4" Margin="0,0,8,0"/>
+            <Button Content="Ukloni" Command="{Binding RemoveFolderCommand}" Padding="12,4"/>
+        </StackPanel>
+
+        <!-- Status -->
+        <TextBlock Grid.Row="3" Text="{Binding StatusMessage}" Foreground="Gray"/>
+    </Grid>
+</UserControl>

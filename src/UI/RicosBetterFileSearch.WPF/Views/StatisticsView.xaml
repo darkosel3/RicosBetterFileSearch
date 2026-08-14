@@ -1,0 +1,66 @@
+<UserControl x:Class="RicosBetterFileSearch.WPF.Views.StatisticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:RicosBetterFileSearch.WPF.ViewModels">
+    <UserControl.DataContext>
+        <x:Static Member="vm:ViewModelLocator.Statistics" />
+    </UserControl.DataContext>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Content="Osvezi statistiku" Command="{Binding RefreshCommand}"
+                Padding="12,6" HorizontalAlignment="Left" Margin="0,0,0,12"/>
+
+        <!-- Summary -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,12">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <TextBlock Text="Ukupno fajlova: " FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding TotalFiles}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <TextBlock Text="Ukupno foldera: " FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding TotalFolders}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <TextBlock Text="Ukupna velicina: " FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding TotalSize}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                <TextBlock Text="Najveci fajl: " FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding LargestFile}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Details -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                <TextBlock Text="Po ekstenziji" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <DataGrid ItemsSource="{Binding ExtensionStats}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Ekstenzija" Binding="{Binding Extension}" Width="100"/>
+                        <DataGridTextColumn Header="Broj" Binding="{Binding Count}" Width="80"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                <TextBlock Text="Po folderu" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                <DataGrid ItemsSource="{Binding FolderStats}" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Folder" Binding="{Binding FolderName}" Width="150"/>
+                        <DataGridTextColumn Header="Broj" Binding="{Binding Count}" Width="80"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
