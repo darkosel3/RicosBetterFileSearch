@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using RicosBetterFileSearch.Modules.Folders.Application.UseCases;
@@ -76,28 +77,37 @@ public partial class FoldersViewModel : BaseViewModel
         IsBusy = true;
         StatusMessage = $"Skeniram {SelectedFolder.FolderName}...";
 
-        var count = await _indexingUseCases.ScanFolderAsync(SelectedFolder.Id);
+        var count = await Task.Run(() => _indexingUseCases.ScanFolderAsync(SelectedFolder.Id));
 
-        await LoadFoldersAsync();
-        IsBusy = false;
-        StatusMessage = $"Skenirano: {count} fajlova pronadjeno.";
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            _ = LoadFoldersAsync();
+            IsBusy = false;
+            StatusMessage = $"Skenirano: {count} fajlova pronadjeno.";
+        });
     }
 
     [RelayCommand]
     private async Task ScanAllFolders()
     {
         IsBusy = true;
+        var foldersToScan = Folders.Where(f => f.IsActive).ToList();
         int total = 0;
 
-        foreach (var folder in Folders.Where(f => f.IsActive))
+        foreach (var folder in foldersToScan)
         {
-            StatusMessage = $"Skeniram {folder.FolderName}...";
-            total += await _indexingUseCases.ScanFolderAsync(folder.Id);
+            Application.Current.Dispatcher.Invoke(() =>
+                StatusMessage = $"Skeniram {folder.FolderName}...");
+
+            total += await Task.Run(() => _indexingUseCases.ScanFolderAsync(folder.Id));
         }
 
-        await LoadFoldersAsync();
-        IsBusy = false;
-        StatusMessage = $"Skeniranje zavrseno: {total} fajlova ukupno.";
+        Application.Current.Dispatcher.Invoke(async () =>
+        {
+            await LoadFoldersAsync();
+            IsBusy = false;
+            StatusMessage = $"Skeniranje zavrseno: {total} fajlova ukupno.";
+        });
     }
 
     private async Task LoadFoldersAsync()

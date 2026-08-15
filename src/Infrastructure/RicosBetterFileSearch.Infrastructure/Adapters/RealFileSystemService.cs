@@ -3,26 +3,28 @@ using RicosBetterFileSearch.Modules.Indexing.Domain.Entities;
 
 namespace RicosBetterFileSearch.Infrastructure.Adapters;
 
-/// <summary>
-/// Fake adapter koji skenira pravi file system.
-/// Za unit testove postoji InMemoryFileSystemService.
-/// Heksagonalni pattern: Application sloj zavisi od IFileSystemService porta,
-/// ne od konkretne implementacije.
-/// </summary>
-public class RealFileSystemService : IFileSystemService
+public class RealFileSystemService : IFileSystemService 
 {
     public Task<IEnumerable<FileEntry>> ScanFolderAsync(string folderPath, Guid folderId)
     {
-        var entries = new List<FileEntry>();
+        return Task.Run(() =>
+        {
+            var entries = new List<FileEntry>();
 
-        if (!Directory.Exists(folderPath))
-            return Task.FromResult<IEnumerable<FileEntry>>(entries);
+            if (!Directory.Exists(folderPath))
+                return (IEnumerable<FileEntry>)entries;
 
+            ScanRecursive(folderPath, folderId, entries);
+
+            return (IEnumerable<FileEntry>)entries;
+        });
+    }
+
+    private void ScanRecursive(string directory, Guid folderId, List<FileEntry> entries)
+    {
         try
         {
-            var files = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories);
-
-            foreach (var filePath in files)
+            foreach (var filePath in Directory.GetFiles(directory))
             {
                 try
                 {
@@ -37,17 +39,14 @@ public class RealFileSystemService : IFileSystemService
                         FolderId = folderId
                     });
                 }
-                catch
-                {
-                    // Skip fajlove koje ne mozemo da procitamo (permisije itd.)
-                }
+                catch { }
+            }
+
+            foreach (var subDir in Directory.GetDirectories(directory))
+            {
+                ScanRecursive(subDir, folderId, entries);
             }
         }
-        catch
-        {
-            // Skip ako folder nije dostupan
-        }
-
-        return Task.FromResult<IEnumerable<FileEntry>>(entries);
+        catch { }
     }
 }
