@@ -4,6 +4,7 @@ using System.Windows.Input;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 using RicosBetterFileSearch.Infrastructure.DependencyInjection;
+using RicosBetterFileSearch.Infrastructure;
 using RicosBetterFileSearch.SharedKernel;
 using RicosBetterFileSearch.Modules.Folders.Domain.Events;
 using RicosBetterFileSearch.WPF.ViewModels;
@@ -38,7 +39,7 @@ public partial class App : Application
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
             "RicosBetterFileSearch", "data");
 
-        services.AddInfrastructure(dataDir, useFakeFileSystem: false);
+        services.AddInfrastructure(dataDir, useFakeFileSystem: false, persistence: Infrastructure.DependencyInjection.PersistenceProvider.Json);
 
         // ViewModels
         services.AddTransient<FoldersViewModel>();
@@ -108,3 +109,4 @@ public partial class App : Application
         base.OnExit(e);
     }
 }
+
