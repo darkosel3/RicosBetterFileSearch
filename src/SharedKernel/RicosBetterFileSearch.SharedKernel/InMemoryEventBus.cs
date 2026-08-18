@@ -1,4 +1,4 @@
-﻿namespace RicosBetterFileSearch.SharedKernel;
+namespace RicosBetterFileSearch.SharedKernel;
 
 public class InMemoryEventBus : IEventBus
 {

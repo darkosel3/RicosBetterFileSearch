@@ -3,11 +3,6 @@ using RicosBetterFileSearch.Modules.Indexing.Domain.Entities;
 
 namespace RicosBetterFileSearch.Infrastructure.Adapters;
 
-/// <summary>
-/// Fake adapter za testiranje - vraca hardkodirane fajlove.
-/// Demonstrira heksagonalni pristup: zamena implementacije
-/// bez izmene poslovne logike.
-/// </summary>
 public class FakeFileSystemService : IFileSystemService
 {
     public Task<IEnumerable<FileEntry>> ScanFolderAsync(string folderPath, Guid folderId)

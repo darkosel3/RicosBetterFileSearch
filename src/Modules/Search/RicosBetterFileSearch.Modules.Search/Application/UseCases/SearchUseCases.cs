@@ -32,7 +32,6 @@ public class SearchUseCases
 
         var resultList = results.ToList();
 
-        // Sacuvaj u istoriju pretrage
         var history = new SearchHistory
         {
             Query = query,

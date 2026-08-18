@@ -18,7 +18,6 @@ public partial class App : Application
 
     private QuickSearchWindow? _quickSearch;
 
-    // Win32 hotkey
     [DllImport("user32.dll")]
     private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
     [DllImport("user32.dll")]
@@ -41,14 +40,12 @@ public partial class App : Application
 
         services.AddInfrastructure(dataDir, useFakeFileSystem: false, persistence: Infrastructure.DependencyInjection.PersistenceProvider.Json);
 
-        // ViewModels
         services.AddTransient<FoldersViewModel>();
         services.AddTransient<SearchViewModel>();
         services.AddTransient<TagsViewModel>();
         services.AddTransient<StatisticsViewModel>();
         services.AddTransient<QuickSearchViewModel>();
 
-        // Windows
         services.AddSingleton<MainWindow>();
 
         Services = services.BuildServiceProvider();
@@ -58,7 +55,6 @@ public partial class App : Application
         var mainWindow = Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
 
-        // Registruj global hotkey: Ctrl+Shift+F
         var helper = new System.Windows.Interop.WindowInteropHelper(mainWindow);
         RegisterHotKey(helper.Handle, HOTKEY_ID, MOD_CTRL | MOD_SHIFT, VK_F);
 

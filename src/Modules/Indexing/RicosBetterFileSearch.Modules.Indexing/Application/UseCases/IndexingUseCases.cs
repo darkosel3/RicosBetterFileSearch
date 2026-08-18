@@ -30,23 +30,18 @@ public class IndexingUseCases
         var folder = await _folderRepository.GetByIdAsync(folderId);
         if (folder is null) return 0;
 
-        // Batch delete starih zapisa
         await _fileRepository.DeleteWhereAsync(f => f.FolderId == folderId);
 
-        // Skeniraj kroz IFileSystemService port
         var scannedFiles = await _fileSystemService.ScanFolderAsync(folder.FolderPath, folderId);
         var fileList = scannedFiles.ToList();
 
-        // Batch save - jedan upis na disk umesto N
         await _fileRepository.AddRangeAsync(fileList);
 
-        // Azuriraj folder metadata
         folder.LastScannedAt = DateTime.UtcNow;
         folder.FileCount = fileList.Count;
         folder.UpdatedAt = DateTime.UtcNow;
         await _folderRepository.UpdateAsync(folder);
 
-        // Publish event
         _eventBus.Publish(new FolderScannedEvent(folderId, folder.FolderPath, fileList.Count));
 
         return fileList.Count;
