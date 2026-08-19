@@ -12,6 +12,7 @@ using RicosBetterFileSearch.Modules.Folders.Application.UseCases;
 using RicosBetterFileSearch.Modules.Indexing.Application.UseCases;
 using RicosBetterFileSearch.Modules.Tags.Application.UseCases;
 using RicosBetterFileSearch.Modules.Search.Application.UseCases;
+using RicosBetterFileSearch.Modules.Tags.Application.UseCases;
 using RicosBetterFileSearch.Modules.Statistics.Application.UseCases;
 
 namespace RicosBetterFileSearch.Infrastructure.DependencyInjection;
@@ -67,3 +68,4 @@ public static class ServiceCollectionExtensions
         return services;
     }
 }
+

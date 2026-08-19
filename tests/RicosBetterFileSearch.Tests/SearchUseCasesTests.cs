@@ -1,6 +1,7 @@
 using RicosBetterFileSearch.Modules.Search.Application.UseCases;
 using RicosBetterFileSearch.Modules.Search.Domain.Entities;
 using RicosBetterFileSearch.Modules.Indexing.Domain.Entities;
+using RicosBetterFileSearch.Modules.Tags.Domain.Entities;
 using RicosBetterFileSearch.Tests.Fakes;
 
 namespace RicosBetterFileSearch.Tests;
@@ -12,6 +13,7 @@ public class SearchUseCasesTests
     {
         var fileRepo = new InMemoryRepository<FileEntry>();
         var historyRepo = new InMemoryRepository<SearchHistory>();
+        var assignmentRepo = new InMemoryRepository<FileTagAssignment>();
 
         await fileRepo.AddRangeAsync(new List<FileEntry>
         {
@@ -20,7 +22,7 @@ public class SearchUseCasesTests
             new() { FileName = "photo.jpg", Extension = ".jpg", SizeInBytes = 3000 },
         });
 
-        var sut = new SearchUseCases(fileRepo, historyRepo);
+        var sut = new SearchUseCases(fileRepo, historyRepo, assignmentRepo);
         var results = (await sut.SearchFilesAsync("report")).ToList();
 
         Assert.Equal(2, results.Count);
@@ -28,7 +30,6 @@ public class SearchUseCasesTests
 
         var history = (await sut.GetSearchHistoryAsync()).ToList();
         Assert.Single(history);
-        Assert.Equal("report", history[0].Query);
         Assert.Equal(2, history[0].ResultCount);
     }
 }

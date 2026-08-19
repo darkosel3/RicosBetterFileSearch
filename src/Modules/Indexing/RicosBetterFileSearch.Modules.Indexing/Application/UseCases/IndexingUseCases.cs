@@ -30,11 +30,13 @@ public class IndexingUseCases
         var folder = await _folderRepository.GetByIdAsync(folderId);
         if (folder is null) return 0;
 
+        // refresh
         await _fileRepository.DeleteWhereAsync(f => f.FolderId == folderId);
 
         var scannedFiles = await _fileSystemService.ScanFolderAsync(folder.FolderPath, folderId);
         var fileList = scannedFiles.ToList();
 
+        //
         await _fileRepository.AddRangeAsync(fileList);
 
         folder.LastScannedAt = DateTime.UtcNow;

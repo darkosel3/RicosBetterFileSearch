@@ -32,17 +32,18 @@ public class StatisticsUseCases
                 .GroupBy(f => string.IsNullOrEmpty(f.Extension) ? "(no ext)" : f.Extension.ToLower())
                 .ToDictionary(g => g.Key, g => g.Count()),
             FilesByFolder = files
-                .GroupBy(f => f.FolderId)
-                .ToDictionary(
-                    g => folders.FirstOrDefault(fo => fo.Id == g.Key)?.FolderName ?? "Unknown",
-                    g => g.Count())
+                .GroupBy(f => folders.FirstOrDefault(fo => fo.Id == f.FolderId)?.FolderName ?? "Unknown")
+                .ToDictionary(g => g.Key, g => g.Count())
         };
 
-        var largest = files.MaxBy(f => f.SizeInBytes);
-        if (largest is not null)
+        if (files.Count > 0)
         {
-            result.LargestFileName = largest.FileName;
-            result.LargestFileSize = largest.SizeInBytes;
+            var largest = files.MaxBy(f => f.SizeInBytes);
+            if (largest is not null)
+            {
+                result.LargestFileName = largest.FileName;
+                result.LargestFileSize = largest.SizeInBytes;
+            }
         }
 
         return result;

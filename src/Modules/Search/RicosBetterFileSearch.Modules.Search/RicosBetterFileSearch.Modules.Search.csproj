@@ -4,6 +4,7 @@
     <ProjectReference Include="..\..\..\SharedKernel\RicosBetterFileSearch.SharedKernel\RicosBetterFileSearch.SharedKernel.csproj" />
     <ProjectReference Include="..\..\Indexing\RicosBetterFileSearch.Modules.Indexing\RicosBetterFileSearch.Modules.Indexing.csproj" />
     <ProjectReference Include="..\..\Folders\RicosBetterFileSearch.Modules.Folders\RicosBetterFileSearch.Modules.Folders.csproj" />
+    <ProjectReference Include="..\..\Tags\RicosBetterFileSearch.Modules.Tags\RicosBetterFileSearch.Modules.Tags.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
